@@ -1,5 +1,5 @@
 # Ignore vscode folders/files
-/pycache/
+/__pycache__/
 /.vscode/
 cspell.json
 
