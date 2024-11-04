@@ -1,0 +1,7 @@
+# Ignore vscode folders/files
+/pycache/
+/.vscode/
+cspell.json
+
+# Ignore test file
+zzzz.py
