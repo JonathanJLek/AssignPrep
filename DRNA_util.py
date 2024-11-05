@@ -1,33 +1,8 @@
 NUCLEOTIDES_DNA = ['A','C','G','T']
 NUCLEOTIDES_RNA = ['A','C','G','U']
 
-
-def isRNA(sequence, ignore = None) -> bool:
-    """Verifies if a given list(or string) consists of RNA-Nucleotides.
-    Returns False if any character is not a RNA-Nucleotide or in the ignore list.
-    Returns True otherwise.
-
-    Args:
-        sequence (list): List of char elements to be verified
-        ignore (list): List of char elements to be ignored during verification
-
-    Returns:
-        bool: True if RNA, False if not
-    """
-    # Arguments should be iterable
-    assert hasattr(sequence, '__getitem__'), "sequence argument not subscriptable"
-    if ignore: assert hasattr(ignore, '__getitem__'), "ignore argument not subscriptable"
-    if not ignore: ignore = []
-
-    # Iterates each element in the list, if any aren't valid return False
-    for char in sequence:
-        if char in NUCLEOTIDES_RNA:
-            continue
-        else:
-            return False
-
-    # Iterator didn't return, hence every char is valid 
-    return True
+# TODO Combine isRna and isDNA into one, refactor code so the standard
+# becomes DNA = True and RNA = FALSE. In this way any sequence can be identified by a boolean.
 
 def isDNA(sequence, ignore = None) -> bool:
     """Verifies if a given list(or string) consists of DNA-Nucleotides.
@@ -54,6 +29,33 @@ def isDNA(sequence, ignore = None) -> bool:
             return False
 
     # Iterator didn't return, hence every char is valid
+    return True
+
+def isRNA(sequence, ignore = None) -> bool:
+    """Verifies if a given list(or string) consists of RNA-Nucleotides.
+    Returns False if any character is not a RNA-Nucleotide or in the ignore list.
+    Returns True otherwise.
+
+    Args:
+        sequence (list): List of char elements to be verified
+        ignore (list): List of char elements to be ignored during verification
+
+    Returns:
+        bool: True if RNA, False if not
+    """
+    # Arguments should be iterable
+    assert hasattr(sequence, '__getitem__'), "sequence argument not subscriptable"
+    if ignore: assert hasattr(ignore, '__getitem__'), "ignore argument not subscriptable"
+    if not ignore: ignore = []
+
+    # Iterates each element in the list, if any aren't valid return False
+    for char in sequence:
+        if char in NUCLEOTIDES_RNA:
+            continue
+        else:
+            return False
+
+    # Iterator didn't return, hence every char is valid 
     return True
 
 def FileNucleicAcidType(file_name, ignore = ['\n']) -> tuple[str, bool, bool]:
@@ -94,3 +96,6 @@ def FileNucleicAcidType(file_name, ignore = ['\n']) -> tuple[str, bool, bool]:
                     RNA = True
 
     return [file_name, DNA, RNA]
+
+def complement(sequence, nucleic_acid_type : bool):
+    pass

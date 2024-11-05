@@ -11,8 +11,6 @@ parser = argparse.ArgumentParser(
 parser.add_argument('filename')
 args = parser.parse_args()
 
-
-
 # Check to see if file exists, otherwise exist with code 1
 try:
     with open(args.filename, 'r') as read_file:
