@@ -1,11 +1,19 @@
 from random import choice
-import os
+import os, re
+
+DRNA_SEQUENCES_DIR = (os.getcwd() + "\\DRNA_Sequences")
+
 NUCLEOTIDES_DNA = ['A','C','G','T']
 NUCLEOTIDES_RNA = ['A','C','G','U']
 
 DNA_TYPE = 'D'
 RNA_TYPE = 'R'
 NON_TYPE = ''
+
+def initialize():
+    """Create sequence storage folder path if not exists."""
+    if not os.path.exists(DRNA_SEQUENCES_DIR):
+        os.makedirs(DRNA_SEQUENCES_DIR)  
 
 class Sequence:
     """Central sequence object of DRNA-Utils. Comes with associated .txt file in ${cwd}\\DRNA_Sequences
@@ -103,7 +111,7 @@ def readFromFile(file_path, ignore) -> Sequence:
 
 #TODO: Add file formatting. Either here or by a general function that can be called on files read or generated.
 #TODO: Pass nucleotide counts to returned Sequence object. PRIORITY HIGH
-def generateSequence(sequence_type: str, length: int, sequence_name: str, format: str = None) -> Sequence:
+def generateSequence(sequence_type: str, length: int, sequence_name: str, format: str = None) -> Sequence:  
     """Generates a Sequence object and its associated fle in /DRNA_util directory.\n
     Directory is made if it is not present when function is called. Format is currently useless
 
@@ -134,17 +142,13 @@ def generateSequence(sequence_type: str, length: int, sequence_name: str, format
     for i in range(0, length):
         nucleotide_list.append(choice(nucleotides))
 
-    # Important file paths
-    working_directory = os.getcwd()
-    target_dir = os.path.join(working_directory, "DRNA_Sequences")
-
     # Make target directory if it does not exist
-    if not os.path.exists(target_dir):
-        os.makedirs(target_dir)  
+    if not os.path.exists(DRNA_SEQUENCES_DIR):
+        raise FileNotFoundError("Target directory does not exist...")
 
     # Add extension to sequence name and create final path.
     sequence_file = sequence_name + '.txt'       
-    sequence_file_path = os.path.join(target_dir, sequence_file)
+    sequence_file_path = os.path.join(DRNA_SEQUENCES_DIR, sequence_file)
     
     # No try block because of 'w' flag
     with open(sequence_file_path, 'w') as write_file:
@@ -159,4 +163,8 @@ def convertSequence(sequence: Sequence, conversion_type: str):
     pass
 
 def parseSequence(sequence: Sequence, format: str):
+    pass
+
+#This should use regex to return count and location
+def findNucleotideSequence():
     pass
