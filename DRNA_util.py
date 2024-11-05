@@ -108,8 +108,26 @@ class Sequence:
         self.file_path = file_path
         return 0
 
-def generateSequence(sequence_type: str, length: int, sequence_name: str, format=None) -> Sequence:
-    nucleotides = None;
+#TODO: Add file formatting. Either here or by a general function that can be called on files read or generated.
+#TODO: Pass nucleotide counts to returned Sequence object. PRIORITY HIGH
+def generateSequence(sequence_type: str, length: int, sequence_name: str, format: str = None) -> Sequence:
+    """Generates a Sequence object and its associated fle in /DRNA_util directory.\n
+    Directory is made if it is not present when function is called. Format is currently useless
+
+    Args:
+        sequence_type (str): Sequence type, 'D' for DNA, 'R' for RNA
+        length (int): Length of desired sequence.
+        sequence_name (str): name of associated sequence file. Without file extension.
+        format (str, optional): format flags for writing to file. Defaults to None.
+
+    Raises:
+        ValueError: Error raised when sequence_type is has invalid value
+
+    Returns:
+        Sequence: Sequence object generated according to specifications
+    """
+    # Prepare lists for sequence generation
+    nucleotides = []
     nucleotide_list = []
   
     if sequence_type == 'D':
@@ -119,15 +137,19 @@ def generateSequence(sequence_type: str, length: int, sequence_name: str, format
     else:
         raise ValueError("Passed invalid sequence type to generateSequence()...")
 
+    # Generate sequence
     for i in range(0, length):
         nucleotide_list.append(choice(nucleotides))
 
+    # Important file paths
     working_directory = os.getcwd()
     target_dir = os.path.join(working_directory, "DRNA_Sequences")
 
+    # Make target directory if it does not exist
     if not os.path.exists(target_dir):
         os.makedirs(target_dir)  
 
+    # Add extension to sequence name and create final path.
     sequence_file = sequence_name + '.txt'       
     sequence_file_path = os.path.join(target_dir, sequence_file)
     
@@ -136,8 +158,16 @@ def generateSequence(sequence_type: str, length: int, sequence_name: str, format
         write_file.write(''.join(nucleotide_list))
         print("Generated file at:"+ sequence_file_path )
     
+    # Generate sequence object to return with associated values. TODO: Make constructor to streamlines this process.
     generated_sequence = Sequence()
+    generated_sequence.sequence_type = sequence_type
     generated_sequence.file_path = sequence_file_path
+   
 
     return generated_sequence
 
+def convertSequence(sequence: Sequence, conversion_type: str):
+    pass
+
+def parseSequence(sequence: Sequence, format: str):
+    pass
