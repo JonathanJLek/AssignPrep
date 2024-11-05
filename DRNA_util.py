@@ -1,7 +1,7 @@
 from random import choice
 import os, re
 
-DRNA_SEQUENCES_DIR = (os.getcwd() + os.path.sep + "DRNA_Sequences")
+DRNA_SEQUENCES_DIR = (os.getcwd() + os.path.sep + "DRNA_Sequences" + os.path.sep)
 
 NUCLEOTIDES_DNA = ['A','C','G','T']
 NUCLEOTIDES_RNA = ['A','C','G','U']
@@ -20,7 +20,7 @@ class Sequence:
     """
     def __init__(self, 
                  sequence_type, 
-                 nucleotides = {
+                 nucleotide_count = {
             'A': 0,
             'C': 0,
             'G': 0,
@@ -32,7 +32,7 @@ class Sequence:
         self.sequence_type = sequence_type
         """Stores nucleic acid type specifier. For DNA, RNA or NON-TYPE
         """
-        self.nucleotides = nucleotides
+        self.nucleotide_count = nucleotide_count
         """Stores nucleotides count in dictionary with one letter nucleotide character as key and count as value.
         """
         self.file_path = file_path
@@ -50,8 +50,9 @@ def analyzeIterable(target_list, ignore = ['\n']) -> dict:
      0 - type specifier: DNA 'D', RNA 'R' or NOT Nucleic Acid ''\n
      1 - Dictionary for keeping track of nucleotide count
     """
-    assert hasattr(target_list, '__getitem__'), "sequence argument not subscriptable"
-    if ignore: assert hasattr(ignore, '__getitem__'), "ignore argument not subscriptable"
+    # Assert the passed argument is iterable - Not yet a watertight filter but oh well
+    assert hasattr(target_list, '__getitem__'), "sequence argument not iterable"
+    if ignore: assert hasattr(ignore, '__getitem__'), "ignore argument not iterable"
     if not ignore: ignore = []
 
     # List of sequence information
@@ -83,7 +84,7 @@ def analyzeIterable(target_list, ignore = ['\n']) -> dict:
 
     return sequence_info
 
-def readFromFile(file_path, ignore) -> Sequence:
+def readFromFile(file_path, ignore=['\n']) -> Sequence:
         """Reads a .txt file for nucleotides using DRNA_util.analyzeString().
 
         Args:
@@ -138,9 +139,13 @@ def generateSequence(sequence_type: str, length: int, sequence_name: str, format
     else:
         raise ValueError("Passed invalid sequence type to generateSequence()...")
 
-    # Generate sequence
+
+    # Generate sequence and count dictionary
+    nucleotide_count = {}
     for i in range(0, length):
-        nucleotide_list.append(choice(nucleotides))
+        nucleotide = choice(nucleotides)
+        nucleotide_list.append(nucleotide)
+        nucleotide_count[nucleotide] += 1
 
     # Make target directory if it does not exist
     if not os.path.exists(DRNA_SEQUENCES_DIR):
@@ -155,7 +160,7 @@ def generateSequence(sequence_type: str, length: int, sequence_name: str, format
         write_file.write(''.join(nucleotide_list))
         print("Generated file at:"+ sequence_file_path )
     
-    generated_sequence = Sequence(sequence_type, file_path=sequence_file_path)
+    generated_sequence = Sequence(sequence_type, nucleotides=nucleotide_count, file_path=sequence_file_path)
 
     return generated_sequence
 
