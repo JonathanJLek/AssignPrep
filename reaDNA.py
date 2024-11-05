@@ -8,11 +8,11 @@ parser = argparse.ArgumentParser(
 
 # >reaDNA.py filename
 # filename should be a .txt file
-parser.add_argument('filename')
+parser.add_argument('path')
 args = parser.parse_args()
 
 seq1 = DRNA_util.Sequence()
-seq1.readFromFile(args.filename, ['\n'])
-print(seq1.type)
+seq1.readFromFile(args.path, ['\n'])
+print(seq1.sequence_type)
 # Input call to prevent terminal from closing
 input("Press RETURN to close...")

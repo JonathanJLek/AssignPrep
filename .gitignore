@@ -3,5 +3,8 @@
 /.vscode/
 cspell.json
 
+#Ignore output files
+/DRNA_Sequences/
+
 # Ignore test file
 zzzz.py
