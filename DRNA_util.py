@@ -56,8 +56,8 @@ def isDNA(sequence, ignore = None) -> bool:
     # Iterator didn't return, hence every char is valid
     return True
 
-def determineFileNucleicAcidType(file_name, ignore = ['\n']) -> tuple[str, bool, bool]:
-    """Opens file and determines it
+def FileNucleicAcidType(file_name, ignore = ['\n']) -> tuple[str, bool, bool]:
+    """Opens file and determines its nucleic acid type, returning a tuple.
 
     Args:
         file_name (string): Name of file to have its type determined

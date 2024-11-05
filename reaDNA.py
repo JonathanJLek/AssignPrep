@@ -23,7 +23,8 @@ except FileNotFoundError:
     exit(1)
 
 
-print(DRNA_util.determineFileNucleicAcidType(args.filename))
+print(DRNA_util.FileNucleicAcidType(args.filename))
+
 
 # Input call to prevent terminal from closing
 input("Press RETURN to close...")
