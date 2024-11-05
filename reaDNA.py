@@ -12,16 +12,26 @@ parser.add_argument('filename')
 args = parser.parse_args()
 
 # Check to see if file exists, otherwise exist with code 1
+file_lines = []
 try:
     with open(args.filename, 'r') as read_file:
-        pass 
+        file_content = read_file.readlines()
+        
+        NUCLEIC_TYPE : bool = None
+        NUCLEIC_COUNT : dict = {}
+        for line in file_content:
+            temp = DRNA_util.initializeSequence(line)
+            NUCLEIC_TYPE = temp[0]
+            NUCLEIC_COUNT= {k: NUCLEIC_COUNT.get(k, 0) + temp[1].get(k,0) for k in set(NUCLEIC_COUNT) | set(temp[1])}
+        
+            
 except FileNotFoundError:
     print("No file with name %s was found..." % args.filename)
     input()
     exit(1)
 
 
-print(DRNA_util.FileNucleicAcidType(args.filename))
+print(NUCLEIC_COUNT)
 
 
 # Input call to prevent terminal from closing
