@@ -1,7 +1,7 @@
 from random import choice
 import os, re
 
-DRNA_SEQUENCES_DIR = (os.getcwd() + "\\DRNA_Sequences")
+DRNA_SEQUENCES_DIR = (os.getcwd() + os.path.sep + "DRNA_Sequences")
 
 NUCLEOTIDES_DNA = ['A','C','G','T']
 NUCLEOTIDES_RNA = ['A','C','G','U']
