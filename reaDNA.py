@@ -11,6 +11,13 @@ parser = argparse.ArgumentParser(
 parser.add_argument('path', nargs='?', default=None)
 args = parser.parse_args()
 
+def generateSequenceFromTerminal(name=None):
+    print("""
+          Please enter sequence information:
+          name - sequence name
+          """)
+    
+
 # Prepare active sequence variable
 active_sequence = None
 
@@ -18,12 +25,17 @@ active_sequence = None
 if not args.path:
     print("No target file was passed.\nChoose file:")
     for x in os.listdir(DRNA_util.DRNA_SEQUENCES_DIR): print(x)
-    selection = input()
-    if selection not in os.listdir(DRNA_util.DRNA_SEQUENCES_DIR):
-        raise FileNotFoundError("No such file in: %s" % DRNA_util.DRNA_SEQUENCES_DIR)
-    active_sequence = DRNA_util.readFromFile(os.path.join(DRNA_util.DRNA_SEQUENCES_DIR, selection))
+    userin_selection = input()
+    if userin_selection not in os.listdir(DRNA_util.DRNA_SEQUENCES_DIR):
+        print("No such file in: %s" % DRNA_util.DRNA_SEQUENCES_DIR)
+        if input("Do you want to make a new sequence called: " + userin_selection + " ? y/N") in ['y', 'Y']:
+            active_sequence = generateSequenceFromTerminal()
+
+    active_sequence = DRNA_util.readFromFile(os.path.join(DRNA_util.DRNA_SEQUENCES_DIR, userin_selection))
 else:
     active_sequence = DRNA_util.readFromFile(os.path.join(DRNA_util.DRNA_SEQUENCES_DIR, args.path))
+
+
 
 # Input call to prevent vscode terminal from closing
 input("Press RETURN to close...")

@@ -111,7 +111,6 @@ def readFromFile(file_path, ignore=['\n']) -> Sequence:
         return Sequence(last_type, )
 
 #TODO: Add file formatting. Either here or by a general function that can be called on files read or generated.
-#TODO: Pass nucleotide counts to returned Sequence object. PRIORITY HIGH
 def generateSequence(sequence_type: str, length: int, sequence_name: str, format: str = None) -> Sequence:  
     """Generates a Sequence object and its associated fle in /DRNA_util directory.\n
     Directory is made if it is not present when function is called. Format is currently useless
@@ -164,12 +163,14 @@ def generateSequence(sequence_type: str, length: int, sequence_name: str, format
 
     return generated_sequence
 
+# TODO: Actually make function
 def convertSequence(sequence: Sequence, conversion_type: str):
     pass
 
+# TODO: Actually make function
 def parseSequence(sequence: Sequence, format: str):
     pass
 
-#This should use regex to return count and location
+#This should use regex to return count and location # TODO: Actually make function
 def findNucleotideSequence():
     pass
